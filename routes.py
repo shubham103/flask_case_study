@@ -199,17 +199,21 @@ def customerStatus():
 	return render_template('index.html')
 
 
-@app.route('/search_customer', methods=['GET','POST'])
-@login_required
-def searchCustomer():
 
-	if request.method == 'POST':
-		
-		
-		
-	else:
 
-		return render_template('searchCustomer.html')
+
+
+# @app.route('/search_customer', methods=['GET','POST'])
+# @login_required
+# def searchCustomer():
+
+# 	if request.method == 'POST':
+		
+		
+		
+# 	else:
+
+# 		return render_template('searchCustomer.html')
 
 
 #--------------------------------------------------------   account related
@@ -218,21 +222,6 @@ def searchCustomer():
 @app.route('/create_account', methods=['GET','POST'])
 @login_required
 def createAccount():
-
-	if request.method == 'POST':
-		
-		pass
-		
-	else:
-
-		pass
-
-	return render_template('index.html')
-
-
-@app.route('/update_account', methods=['GET','POST'])
-@login_required
-def updateAccount():
 
 	if request.method == 'POST':
 		
@@ -266,19 +255,19 @@ def accountStatus():
 	return render_template('index.html')
 
 
-@app.route('/search_account', methods=['GET','POST'])
-@login_required
-def searchAccount():
+# @app.route('/search_account', methods=['GET','POST'])
+# @login_required
+# def searchAccount():
 
-	if request.method == 'POST':
+# 	if request.method == 'POST':
 		
-		pass
+# 		pass
 		
-	else:
+# 	else:
 
-		pass
+# 		pass
 
-	return render_template('index.html')
+# 	return render_template('index.html')
 
 
 #--------------------------------------------------------  transactoins
