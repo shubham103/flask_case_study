@@ -448,7 +448,7 @@ def statementByDate():
 
 		if db.isAccountIdExist(aid):
 			
-			response = db.statementByNumber(aid,sdate,edate)
+			response = db.statementByDate(aid,sdate,edate)
 
 			if respose[0]:
 				return render_template("showStatements.html",response)
