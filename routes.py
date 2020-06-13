@@ -79,7 +79,7 @@ def createCustomer():
 
 		if respose[0]:
 			flash("Customer creation initiated successfully")
-			 return redirect(url_for("index"))
+			return redirect(url_for("index"))
 		else:
 			flash(response[1])
 			return redirect(url_for("createCustomer"))
@@ -221,7 +221,7 @@ def createAccount():
 
 		if respose[0]:
 			flash("Account creation initiated successfully")
-			 return redirect(url_for("index"))
+			return redirect(url_for("index"))
 		else:
 			flash(response[1])
 			return redirect(url_for("createAccount"))
@@ -373,9 +373,6 @@ def withdraw():
 			return render_template('withdraw.html', aid = session.pop('aid'))
 		else:
 			return render_template('searchAccount.html')
-
-
-Transfer amount, Source Account, Target Account
 
 
 @app.route('/transfer', methods=['GET','POST'])
