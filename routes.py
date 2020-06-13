@@ -170,7 +170,7 @@ def preDeleteCustomer():
 
 
 
-@app.route('/delete_customer', methods=['GET','POST'])
+@app.route('/delete_customer', methods=['POST'])
 @login_required
 def deleteCustomer():
 
@@ -186,7 +186,7 @@ def deleteCustomer():
 				return redirect(url_for("index"))
 			else:
 				flash(response[1])
-				return redirect(url_for("preUpdateCustomer"))
+				return redirect(url_for("preDeleteCustomer"))
 
 		
 	
@@ -196,24 +196,12 @@ def deleteCustomer():
 @app.route('/customer_status', methods=['GET'])
 @login_required
 def customerStatus():
-	return render_template('index.html')
-
-
-
-
-
-
-# @app.route('/search_customer', methods=['GET','POST'])
-# @login_required
-# def searchCustomer():
-
-# 	if request.method == 'POST':
-		
-		
-		
-# 	else:
-
-# 		return render_template('searchCustomer.html')
+	customer_data = db.getCustomerDetails()
+	if customer_data[0] :
+		return render_template('customerStatus.html', customerData=customer_data[1])
+	else:
+		flash(customer_data[1])
+	return redirect(url_for('index'))
 
 
 #--------------------------------------------------------   account related
@@ -224,29 +212,63 @@ def customerStatus():
 def createAccount():
 
 	if request.method == 'POST':
+			
+		cid      	= request.form['cid']
+		aType		= request.form['aType']
+		deposit 	= request.form['deposit']
+
+		response=db.createAccount(cid, aType, deposit)
+
+		if respose[0]:
+			flash("Account creation initiated successfully")
+			 return redirect(url_for("index"))
+		else:
+			flash(response[1])
+			return redirect(url_for("createAccount"))
 		
-		pass
+	else: 
+		return render_template('createAccount.html')
+
+
+@app.route('/pre_delete_account', methods=['GET','POST'])
+@login_required
+def preDeleteAccount():
+
+	if request.method == 'POST':
 		
-	else:
+		if 'aid' in request.form:
+			ssnid = request.form['aid']
+			if db.isAccountIdExist(aid):
+				account_data = getAccountIdDetils(aid)
+				return render_template('DeleteAccount.html', account_data)
+			else:
+				flash("acount does not exist !!!!!!!!")
+				return redirect(url_for('preDeleteAccount'))
+						
 
-		pass
+	elif request.method == 'GET':
 
-	return render_template('index.html')
+		return render_template('preDeleteAccount.html')
 
 
-@app.route('/delete_account', methods=['GET','POST'])
+
+@app.route('/delete_account', methods=['POST'])
 @login_required
 def deleteAccount():
 
 	if request.method == 'POST':
 		
-		pass
-		
-	else:
+		if 'ssnid' in request.form:
+			ssnid = request.form['ssnid']
 
-		pass
+			response = db.deleteCustomer(ssnid)
 
-	return render_template('index.html')
+			if respose[0]:
+				flash("Customer deleted successfully")
+				return redirect(url_for("index"))
+			else:
+				flash(response[1])
+				return redirect(url_for("preDeleteAccount"))
 
 
 @app.route('/account_status', methods=['GET'])
@@ -255,19 +277,42 @@ def accountStatus():
 	return render_template('index.html')
 
 
-# @app.route('/search_account', methods=['GET','POST'])
-# @login_required
-# def searchAccount():
+# searchAccount.html
+# accountlist.html
+# accountdetails.html ---- its ha three options withdraw, deposit and transfer
 
-# 	if request.method == 'POST':
+@app.route('/search_account', methods=['GET','POST'])
+@login_required
+def searchAccount():
+
+	if request.method == 'POST':
 		
-# 		pass
-		
-# 	else:
+		if 'aid' in request.form:
+			aid =  request.form['aid']
 
-# 		pass
+		if 'ssnid' in request.form:
+			ssnid =  request.form['aid']
 
-# 	return render_template('index.html')
+		if len(aid)>0:
+			if db.isAccountIdExist(aid):
+				account_data = db.getAccountIdDetils(aid)
+				session['aid']=aid
+				return render_template('accountdetails.html', account_data)
+
+			else:
+				flash("account does not exist")
+				return redirect(url_for('searchAccount'))
+
+		else:
+			if db.isCustomerSsnidExist(ssnid):
+				accounts = db.getSsnidAccounts(ssnid)
+				return render_template('accountlist.html',accounts)
+			else:
+				flash("customer  does not exist")
+				return redirect(url_for('searchAccount'))
+
+	else:
+		return render_template('searchAccount.html')
 
 
 #--------------------------------------------------------  transactoins
@@ -278,13 +323,28 @@ def deposit():
 
 	if request.method == 'POST':
 		
-		pass
+		
+		aid  = request.form['aid']
+		damt = request.form['amount']
+
+		response = db.deposit(aid,damt)
+
+		if respose[0]:
+			flash("Amount deposited successfully")
+			return redirect(url_for("index"))
+		else:
+			flash(response[1])
+			return redirect(url_for("searchAccount"))
+
+
 		
 	else:
+		if 'aid' in session:
+			return render_template('deposit.html', aid = session.pop('aid'))
+		else:
+			return render_template('searchAccount.html')
 
-		pass
 
-	return render_template('index.html')
 
 
 @app.route('/withdraw', methods=['GET','POST'])
@@ -292,14 +352,30 @@ def deposit():
 def withdraw():
 
 	if request.method == 'POST':
+
 		
-		pass
+		aid  = request.form['aid']
+		wamt = request.form['amount']
+
+		response = db.withdraw(aid,wamt)
+
+		if respose[0]:
+			flash("Amount withdrawn successfully")
+			return redirect(url_for("index"))
+		else:
+			flash(response[1])
+			return redirect(url_for("searchAccount"))
+		
+		
 		
 	else:
+		if 'aid' in session:
+			return render_template('withdraw.html', aid = session.pop('aid'))
+		else:
+			return render_template('searchAccount.html')
 
-		pass
 
-	return render_template('index.html')
+Transfer amount, Source Account, Target Account
 
 
 @app.route('/transfer', methods=['GET','POST'])
@@ -308,44 +384,80 @@ def transfer():
 
 	if request.method == 'POST':
 		
-		pass
+		amount   =  request.form['amount']
+		SrcAid   =  request.form['source']
+		TgtAid   =  request.form['target']
+
+		if db.isAccountIdExist(SrcAid) and db.isAccountIdExist(TgtAid):
+
+			response = db.transfer(amount, SrcAid, TgtAid)
+
+			if respose[0]:
+				flash("Amount transfer completed successfully")
+				return redirect(url_for("index"))
+			else:
+				flash(response[1])
+				return render_template('transfer.html')
+		else:
+			flah("please check the account number.. something is wrong!!!!!")
+			render_template('transfer.html')
+
 		
 	else:
-
-		pass
-
-	return render_template('index.html')
+		return render_template('transfer.html')
 
 #--------------------------------------------------------- transaction history
 
 
+@app.route('/statement', methods=['GET'])
+@login_required
+def statement():
+	return render_template('statement.html')
 
-@app.route('/statement_by_number', methods=['GET','POST'])
+
+
+@app.route('/statement_by_number', methods=['POST'])
 @login_required
 def statementByNumber():
 
 	if request.method == 'POST':
 		
-		pass
-		
-	else:
+		aid = request.form['aid']
+		n   = request.form['number']
 
-		pass
+		if db.isAccountIdExist(aid):
+			
+			response = db.statementByNumber(aid,n)
 
-	return render_template('index.html')
+			if respose[0]:
+				return render_template("showStatements.html",response)
+			else:
+				flash(response[1])
+				return render_template('statement.html')
+		else:
+			flash("please check account number")
+			return redirect(url_for('statement'))
 
 
-@app.route('/statement_by_date', methods=['GET','POST'])
+@app.route('/statement_by_date', methods=['POST'])
 @login_required
 def statementByDate():
 
 	if request.method == 'POST':
 		
-		pass
-		
-	else:
+		aid    = request.form['aid']
+		sdate  = request.form['startDate']
+		edate  = request.form['endDate']
 
-		pass
+		if db.isAccountIdExist(aid):
+			
+			response = db.statementByNumber(aid,sdate,edate)
 
-	return render_template('index.html')
-
+			if respose[0]:
+				return render_template("showStatements.html",response)
+			else:
+				flash(response[1])
+				return render_template('statement.html')
+		else:
+			flash("please check account number")
+			return redirect(url_for('statement'))
