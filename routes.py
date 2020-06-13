@@ -67,15 +67,15 @@ def createCustomer():
 		ssnid 			= request.form['ssnid']
 		name 			= request.form['name']
 		age 			= request.form['age']
-		address			= request.form['address_line_1'] + request.form['address_line_2']
-		city 			= request.form['city']
-		state 			= request.form['state']
+		address		= request.form['address_line_1'] + request.form['address_line_2']
+		address		+= request.form['city']
+		address		+= request.form['state']
 		
 		if db.isCustomerSsndExist(ssnid):
 			flash("customer already exist")
 			return redirect(url_for("createCustomer"))
 
-		response=db.createCustomer(ssnid,name,age, address, city, state)
+		response=db.createCustomer(ssnid,name,age, address)
 
 		if respose[0]:
 			flash("Customer creation initiated successfully")
@@ -106,8 +106,8 @@ def preUpdateCustomer():
 
 		elif 'cid' in request.form:
 			cid = request.form['cid']
-			if db.isCustomerIddExist(cid):
-				customer_data = getCustomerSSnidDetils(cid)
+			if db.isCustomerIdExist(cid):
+				customer_data = getCustomerIdDetils(cid)
 
 				return render_template('updateCustomer.html', customer_data)
 						
@@ -137,7 +137,7 @@ def updateCustomer():
 		updateFields['age'] = age
 
 
-	response =  db.updateCustomer(updateFields)
+	response =  db.updateCustomer(ssnid,updateFields)
 
 	if respose[0]:
 		flash("Customer updated successfully")
@@ -448,7 +448,7 @@ def statementByDate():
 
 		if db.isAccountIdExist(aid):
 			
-			response = db.statementByNumber(aid,sdate,edate)
+			response = db.statementByDate(aid,sdate,edate)
 
 			if respose[0]:
 				return render_template("showStatements.html",response)
