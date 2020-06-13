@@ -27,3 +27,4 @@ db.withdraw(aid,wamt) -> [true/false,error_msg]  * eg [Ture , ""] or [False,"err
 db.transfer(amount, SrcAid, TgtAid) -> [true/false,error_msg]  * eg [Ture , ""] or [False,"error message"]*
 
 db.statementByNumber(aid,n) -> [ array of latest n statements ]
+db.statementByDate(aid,sdate,edate) --> [ array of statements  used between  given dates]
