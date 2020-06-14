@@ -1,9 +1,12 @@
 from main import app
-from flask import render_template,request,url_for,redirect,flash
+from flask import render_template,request,url_for,redirect,flash,session
 import os
 import json
 from functools import wraps
-from data import db_functions as db
+from db import db_service as db
+
+
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 
 @app.route('/')
@@ -14,12 +17,13 @@ def index():
  
 def login_required(f):
 	@wraps(f)
-	def wraps(*args,**kwargs):
+	def wrap(*args,**kwargs):
 		if 'userId' in session:
 			return f(*args,**kwargs)
 		else:
 			flash(" You need to login first.. ")
 			return redirect(url_for("login"))
+	return wrap
 
 
 
@@ -30,13 +34,14 @@ def login():
 
 	if request.method == 'POST':
 		
-		userId   = request.form('userId')
-		password = request.form('password')
+		userId   = request.form['userId']
+		password = request.form['password']
 
 		if db.isUserExist(userId,password) :
 
+			session['userId'] = userId
+
 			flash('success fully logged in.')
-			session['userId']= userId
 			return redirect(url_for('index'))
 
 		else:
@@ -45,7 +50,7 @@ def login():
 			return redirect(url_for('login'))
 
 	else:
-		return render_template('/login')
+		return render_template('login.html')
 
 
 
@@ -100,7 +105,7 @@ def preUpdateCustomer():
 		if 'ssnid' in request.form:
 			ssnid = request.form['ssnid']
 			if db.isCustomerSsiddExist(ssnid):
-				customer_data = getCustomerSSnidDetils(ssnid)
+				customer_data = getCustomerSsnidDetils(ssnid)
 
 				return render_template("updateCustomer.html", customer_data)
 
@@ -126,18 +131,11 @@ def updateCustomer():
 	address 	= request.form['address']
 	age 		= request.form['age']
 
-	# customerOldData = db.getCustomerSSnidDetils(ssnid)
-	
-	updateFields={}
-	if len(name) >0:
-		updateFields['name']= name
-	if len(address) >0:
-		updateFields['address']= address
-	if len(age) > 0:
-		updateFields['age'] = age
+	#customerOldData = db.getCustomerSsnidDetils(ssnid)
+	# paste the old data in value parameter of form inputs and  make these fields as mandatory in form 
+	# accountant should update the input field or let the old data written.
 
-
-	response =  db.updateCustomer(ssnid,updateFields)
+	response =  db.updateCustomer(ssnid,name,address,age)
 
 	if respose[0]:
 		flash("Customer updated successfully")
@@ -156,7 +154,7 @@ def preDeleteCustomer():
 		if 'ssnid' in request.form:
 			ssnid = request.form['ssnid']
 			if db.isCustomerSsiddExist(ssnid):
-				customer_data = getCustomerSSnidDetils(ssnid)
+				customer_data = getCustomerSsnidDetils(ssnid)
 				return render_template('DeleteCustomer.html', customer_data)
 			else:
 				return redirect(url_for('preDeleteCustomer'))
