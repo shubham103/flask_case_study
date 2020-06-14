@@ -1,1 +1,1 @@
-def isUserExist(userid,password): return [True,""]
+def isUserExist(userid,password): return False

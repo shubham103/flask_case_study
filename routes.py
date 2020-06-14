@@ -47,7 +47,7 @@ def login():
 
 		else:
 
-			flash('Some thing is wrong.. please try again !!')
+			flash('please enter correct Id or Password.. please try again !!')
 			return redirect(url_for('login'))
 
 	else:
