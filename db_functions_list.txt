@@ -13,7 +13,7 @@ db.deleteCustomer(ssnid)   -->  [true/false,error_msg]  * eg [Ture , ""] or [Fal
 db.getCustomerDetails() --> { *SSN ID, Status, Last Updated*  these details of each customer; jsut give list of [ { dict.. key : value  pair}]} \\\\\\\\\\ in the form [true , [{data}]] or [false , error_mssg]
 
 
-
+db.createAccount(cid, aType, deposit)   [true/false,error_msg]  * eg [Ture , ""] or [False,"error message"]*
 db.getAccountIdDetils(aid)--> { all details in key:value pair*customerId,accountId,accountType, balance *}
 
 db.deleteAccount(aid) --> [true/false,error_msg]  * eg [Ture , ""] or [False,"error message"]*
@@ -28,4 +28,12 @@ db.transfer(amount, SrcAid, TgtAid) -> [true/false,error_msg]  * eg [Ture , ""] 
 
 db.statementByNumber(aid,n) -> [ array of latest n statements ]
 
-db.statementByDate(aid,sdate,edate) --> [ array of statements  used between  given dates]
+db.statementByDate(aid,sdate,edate) --> [ array of statements  used between  given dates] (yyyy-mm-dd)
+
+
+
+accountant : 
+
+
+
+	

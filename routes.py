@@ -1,4 +1,4 @@
-from main import app
+from main import app,LoginForm
 from flask import render_template,request,url_for,redirect,flash,session
 import os
 import json
@@ -34,6 +34,7 @@ def login():
 
 	if request.method == 'POST':
 		
+		
 		userId   = request.form['userId']
 		password = request.form['password']
 
@@ -50,7 +51,9 @@ def login():
 			return redirect(url_for('login'))
 
 	else:
-		return render_template('login.html')
+	
+		form = LoginForm()
+		return render_template('login.html',form=form)
 
 
 
