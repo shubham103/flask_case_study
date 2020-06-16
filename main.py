@@ -3,6 +3,24 @@ from flask_wtf import Form
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,IntegerField
 from wtforms.validators import DataRequired, Length, EqualTo
 
+#----------------------------------------------
+#Database
+from flask_mysqldb import MySQL
+from datetime import datetime
+
+app = Flask(__name__)
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'retailbanking'
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+mysql = MySQL(app)
+
+app.run(debug=True)
+#---------------------------------------------
+
 
 class RegistrationForm(Form):
     username = StringField('Customer Name',
