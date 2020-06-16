@@ -323,6 +323,7 @@ def statementByNumber(aid,n):
     else:
         return False
 
+#Mini Statement
 def statementByDate(aid,sdate,edate):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * from transaction where Account_ID=%s and Transaction_date between %s and %s",
