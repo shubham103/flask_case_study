@@ -1,48 +1,48 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="content-section">
-        <form method="POST" action="">
+        <form method="POST" action="/create_account">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Create Account</legend>
                 <div class="form-group">
-                    {{ form.customer_id.label(class="form-control-label") }}
+                    {{ form.cid.label(class="form-control-label") }}
 
-                    {% if form.customer_id.errors %}
-                        {{ form.customer_id(class="form-control form-control-lg is-invalid") }}
+                    {% if form.cid.errors %}
+                        {{ form.cid(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.customer_id.errors %}
+                            {% for error in form.cid.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.customer_id(class="form-control form-control-lg") }}
+                        {{ form.cid(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.account_type.label(class="form-control-label") }}
-                    {% if form.account_type.errors %}
-                        {{ form.account_type(class="form-control form-control-lg is-invalid") }}
+                    {{ form.atype.label(class="form-control-label") }}
+                    {% if form.atype.errors %}
+                        {{ form.atype(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.account_type.errors %}
+                            {% for error in form.atype.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.account_type(class="form-control form-control-lg") }}
+                        {{ form.atype(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    {{ form.deposit_amt.label(class="form-control-label") }}
-                    {% if form.deposit_amt.errors %}
-                        {{ form.deposit_amt(class="form-control form-control-lg is-invalid") }}
+                    {{ form.deposit.label(class="form-control-label") }}
+                    {% if form.deposit.errors %}
+                        {{ form.deposit(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
-                            {% for error in form.deposit_amt.errors %}
+                            {% for error in form.deposit.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.deposit_amt(class="form-control form-control-lg") }}
+                        {{ form.deposit(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 

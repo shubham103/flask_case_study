@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Customer Status</legend>
+
+                <div class="form-group">
+                    
+                        <label for="table"> 
+                      
+                        
+                                <table border=1 width="30%">
+                                    <tr>
+                                   
+                                    <th>Customer_Id</th>
+                                    <th>Account_Id</th>
+                                    <th>Transactoin_date</th>
+                                    <th>Amount</th>
+                                    <th>Source_Acc_Type</th>
+                                    <th>Target_Acc_Type</th>
+                                   
+                                    </tr>
+                                    {% for i in response %}
+                                    <tr>
+                                   
+                                    <td>{{ i.Customer_Id}}</td>
+                                    <td>{{ i.Account_Id }}</td>
+                                    <td>{{ i.Transactoin_date }}</td>
+                                     <td>{{ i.Amount }}</td>
+                                    <td>{{ i.Source_Acc_Type }}</td>
+                                    <td>{{ i.Target_Acc_Type }}</td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </label>
+                    </div>
+
+                   
+            </fieldset>
+        </div>
+            
+{% endblock content %}
