@@ -324,6 +324,7 @@ def statementByNumber(aid,n):
     else:
         return False
 
+#Mini Statement
 def statementByDate(aid,sdate,edate):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * from transaction where Account_ID=%s and Transaction_date between %s and %s",
@@ -333,5 +334,51 @@ def statementByDate(aid,sdate,edate):
         mysql.connection.commit()
         cur.close()
         return val
+    else:
+        return False
+
+def getCustomerIdDetails(cid):
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * from customer where Customer_ID=%s", str(cid))
+    if res1 >= 1:
+        val = cur.fetchall()
+        mysql.connection.commit()
+        cur.close()
+        return val
+    else:
+        mysql.connection.commit()
+        cur.close()
+        return False
+
+def getCustomerSsnidDetails(ssnid):
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * from customer where SSN_ID=%s", str(ssnid))
+    if res1 >= 1:
+        val = cur.fetchall()
+        mysql.connection.commit()
+        cur.close()
+        return val
+    else:
+        mysql.connection.commit()
+        cur.close()
+        return False
+
+def isAccountIdExist(SrcAid):
+    cur = mysql.connection.cursor()
+    res = cur.execute("SELECT * FROM account where Account_ID=%s", str(SrcAid))
+    mysql.connection.commit()
+    cur.close()
+    if res>=1:
+        return True
+    else:
+        return False
+
+def isAccountIdExist(TgtAid):
+    cur = mysql.connection.cursor()
+    res = cur.execute("SELECT * FROM account where Account_ID=%s", str(TgtAid))
+    mysql.connection.commit()
+    cur.close()
+    if res >= 1:
+        return True
     else:
         return False

@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Account Statement</legend>
+                
+                <div class="form-group">
+                    {{ form.account_id.label(class="form-control-label") }}
+                    {% if form.account_id.errors %}
+                        {{ form.account_id(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.account_id.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.account_id(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.last_number_of_transactions.label(class="form-control-label") }}
+                    <input type="checkbox" name="last_number_of_transactions" value="last_number_of_transactions" checked>
+                    <label for="">last_number of transactions</label><br>
+                    {% if form.last_number_of_transactions.errors %}
+                        {{ form.last_number_of_transactions(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_number_of_transactions.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <input type="checkbox" name="" value="" checked>
+                        <label for=""></label><br>
+                        {{ form.last_number_of_transactions(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    
+                    <input type="checkbox" name="start_end_dates" value="start_end_dates" checked>
+                    <label for="">Start end dates</label><br>
+                    {{ form.start_end_dates.label(class="form-control-label") }}
+                    {% if form.start_end_dates.errors %}
+                        {{ form.start_end_dates(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.start_end_dates.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.start_end_dates(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="no_of_transactions">Number of Transactions</label>
+                        <select name="no_of_transactions" id="no_of_transactions">
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                            <option value=5>5</option>
+                            <option value=6>6</option>
+                            <option value=7>7</option>
+                            <option value=8>8</option>
+                            <option value=9>9</option>
+                            <option value=10>10</option>
+                        </select>
+                        <br><br>
+                    {{ form.no_of_transactions.label(class="form-control-label") }}
+                    {% if form.no_of_transactions.errors %}
+                        {{ form.no_of_transactions(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.no_of_transactions.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.no_of_transactions(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            </div>
+        </form>
+    </div>
+    
+{% endblock content %}
