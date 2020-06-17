@@ -26,19 +26,71 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Customer Management</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Management</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Status Details</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Operation</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">About</a>
-              <a class="nav-item nav-link" href="{{ url_for('index') }}">Logout</a>
-            </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
+                    </button>
+                </div>    
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Customer Management</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Create Customer</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Update Customer</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Delete Customer</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Management</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Create Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Delete Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Details</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Search Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Lists</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Status Details</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Statement</a>
+
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Operation</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Deposit</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Withdraw</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Transfer</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        {% if userId %}
+                            <a class="nav-item nav-link" href="{{ url_for('index') }}">Logout</a>
+                        {% else %}
+                            <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
+                        {% endif %}
+                    </button>
+                </div>
+
+              
+            
             <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('createCustomer') }}">Register</a>
-            </div>
+            
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
+                    </button>
+                </div>
           </div>
         </div>
       </nav>
