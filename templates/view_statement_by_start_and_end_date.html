@@ -66,10 +66,10 @@
                                 </tr>
                                 {% for i in table %}
                                 <tr>
-                                <td>i.transaction_id</td>
-                                <td>i.description</td>
-                                <td>i.date</td>
-                                <td>i.amount</td>
+                                <td>{{ i.transaction_id }}</td>
+                                <td>{{ i.description }}</td>
+                                <td>{{ i.date }}</td>
+                                <td>{{ i.amount }}</td>
                                 </tr>
                                 <% endfor %>
                             </table>
