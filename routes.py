@@ -3,7 +3,7 @@ from flask import render_template,request,url_for,redirect,flash,session
 import os
 import json
 from functools import wraps
-from data import db_service as db
+from db import db_service as db
 
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
