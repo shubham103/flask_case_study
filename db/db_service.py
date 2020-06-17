@@ -218,6 +218,7 @@ def deposit(aid, damt):
         l.append(error_msg)
         return l
 
+#Withdraw
 def withdraw(aid,wamt):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * FROM account where Account_ID=%s", aid)
