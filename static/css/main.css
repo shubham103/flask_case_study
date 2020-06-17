@@ -1,7 +1,7 @@
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 5rem;
+    margin-top: 8rem;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -9,7 +9,7 @@ body {
   }
   
   .bg-steel {
-    background-color: #121213;
+    background-color:#000000 ;
   }
   
   .site-header .navbar-nav .nav-link {
@@ -26,7 +26,7 @@ body {
   
   .content-section {
     background: #ffffff;
-    padding: 10px 20px;
+    padding: 60px 40px;
     border: 1px solid #dddddd;
     border-radius: 3px;
     margin-bottom: 20px;
@@ -78,4 +78,37 @@ body {
   .account-heading {
     font-size: 2.5rem;
   }
+  .dropbtn {
+    background-color: #000801;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
   
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #000000;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: rgba(46, 42, 42, 0.719);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color:#868886;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #868886;}
