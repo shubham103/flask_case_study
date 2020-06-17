@@ -218,6 +218,7 @@ def deposit(aid, damt):
         l.append(error_msg)
         return l
 
+#Withdraw
 def withdraw(aid,wamt):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * FROM account where Account_ID=%s", aid)
@@ -333,5 +334,51 @@ def statementByDate(aid,sdate,edate):
         mysql.connection.commit()
         cur.close()
         return val
+    else:
+        return False
+
+def getCustomerIdDetails(cid):
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * from customer where Customer_ID=%s", str(cid))
+    if res1 >= 1:
+        val = cur.fetchall()
+        mysql.connection.commit()
+        cur.close()
+        return val
+    else:
+        mysql.connection.commit()
+        cur.close()
+        return False
+
+def getCustomerSsnidDetails(ssnid):
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * from customer where SSN_ID=%s", str(ssnid))
+    if res1 >= 1:
+        val = cur.fetchall()
+        mysql.connection.commit()
+        cur.close()
+        return val
+    else:
+        mysql.connection.commit()
+        cur.close()
+        return False
+
+def isAccountIdExist(SrcAid):
+    cur = mysql.connection.cursor()
+    res = cur.execute("SELECT * FROM account where Account_ID=%s", str(SrcAid))
+    mysql.connection.commit()
+    cur.close()
+    if res>=1:
+        return True
+    else:
+        return False
+
+def isAccountIdExist(TgtAid):
+    cur = mysql.connection.cursor()
+    res = cur.execute("SELECT * FROM account where Account_ID=%s", str(TgtAid))
+    mysql.connection.commit()
+    cur.close()
+    if res >= 1:
+        return True
     else:
         return False
