@@ -31,54 +31,61 @@
             <div class="navbar-nav mr-auto">
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Home</a>
                     </button>
                 </div>    
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Customer Management</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Customer Management</a>
                     </button>
                     <div class="dropdown-content">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Create Customer</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Update Customer</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Delete Customer</a>
+                        <a class="nav-item nav-link" href="{{ url_for('createCustomer') }}">Create Customer</a>
+                        <a class="nav-item nav-link" href="{{ url_for('preUpdateCustomer') }}">Update Customer</a>
+                        <a class="nav-item nav-link" href="{{ url_for('preDeleteCustomer') }}">Delete Customer</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Account Management</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Management</a>
                     </button>
                     <div class="dropdown-content">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Create Account</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Delete Account</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Account Details</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Search Account</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Account Lists</a>
+                        <a class="nav-item nav-link" href="{{ url_for('createAccount') }}">Create Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('preDeleteAccount') }}">Delete Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('searchAccount') }}">Search Account</a>
+                    </div>
+                </div>
+                  <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Account Operation</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('deposit') }}">Deposit</a>
+                        <a class="nav-item nav-link" href="{{ url_for('withdraw') }}">Withdraw</a>
+                        <a class="nav-item nav-link" href="{{ url_for('transfer') }}">Transfer</a>
+                    </div>
+                </div>
+                 <div class="dropdown">
+                    <button class="dropbtn">
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}"> Get Status</a>
+                    </button>
+                    <div class="dropdown-content">
+                        <a class="nav-item nav-link" href="{{ url_for('accountStatus') }}">Account</a>
+                        <a class="nav-item nav-link" href="{{ url_for('customerStatus') }}">Customer</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Status Details</a>
+                        <a class="nav-item nav-link" href="{{ url_for('index') }}">Statement</a>
                     </button>
                     <div class="dropdown-content">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Statement</a>
-
+                        <a class="nav-item nav-link" href="{{ url_for('statement') }}">Statement</a>
                     </div>
                 </div>
+              
                 <div class="dropdown">
                     <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Account Operation</a>
-                    </button>
-                    <div class="dropdown-content">
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Deposit</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Withdraw</a>
-                        <a class="nav-item nav-link" href="{{ url_for('home') }}">Transfer</a>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        {% if userId %}
-                            <a class="nav-item nav-link" href="{{ url_for('home') }}">Logout</a>
+                        {% if 'userId' in session %}
+                            <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
                         {% else %}
                             <a class="nav-item nav-link" href="{{ url_for('login') }}">Login</a>
                         {% endif %}
@@ -89,11 +96,7 @@
 
             <!-- Navbar Right Side -->
 
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        <a class="nav-item nav-link" href="{{ url_for('register') }}">Register</a>
-                    </button>
-                </div>
+                
             </div>
           </div>
         </div>
