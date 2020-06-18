@@ -50,6 +50,8 @@ def login():
 			return redirect(url_for('login'))
 
 	else:
+		if 'userId' in session:
+			return redirect(url_for('index'))
 	
 		form = LoginForm()
 		return render_template('login.html',form=form)
