@@ -14,7 +14,7 @@
                                     <th>Customer SSN ID</th>
                                     <th>Customer ID</th>
                                     <th>Status</th>
-                                    <!-- <th>Last Updated</th> -->
+                                    <th>Last Updated</th>
                                     <th>Message</th>
                                    
                                     </tr>
@@ -22,8 +22,9 @@
                                     <tr>
                                     <td>{{ i.SSN_ID }}</td>
                                     <td>{{ i.Customer_ID }}</td>
-                                    <!-- <td>{{ i.lastUpdate }}</td> -->
-                                    <td>created succesfully</td>
+                                    <td>{{ i.Status }}</td>
+                                    <td>{{ i.Last_Updated }}</td>
+                                    <td>{{ i.Message }}</td>
                                     </tr>
                                     {% endfor %}
                                 </table>

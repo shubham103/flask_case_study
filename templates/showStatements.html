@@ -12,23 +12,23 @@
                                 <table border=1 width="30%">
                                     <tr>
                                    
-                                    <th>Customer_Id</th>
-                                    <th>Account_Id</th>
-                                    <th>Transactoin_date</th>
+                                    <th>Source_Account_ID</th>
+                                    <th>Tgt_Account_ID</th>
+                                    <th>Transaction_date</th>
                                     <th>Amount</th>
-                                    <th>Source_Acc_Type</th>
-                                    <th>Target_Acc_Type</th>
+                                    <th>Source_Acct_type</th>
+                                    <th>Target_Acct_type</th>
                                    
                                     </tr>
                                     {% for i in response %}
                                     <tr>
                                    
-                                    <td>{{ i.Customer_Id}}</td>
-                                    <td>{{ i.Account_Id }}</td>
-                                    <td>{{ i.Transactoin_date }}</td>
+                                    <td>{{ i.Source_Account_ID}}</td>
+                                    <td>{{ i.Tgt_Account_ID }}</td>
+                                    <td>{{ i.Transaction_date }}</td>
                                      <td>{{ i.Amount }}</td>
-                                    <td>{{ i.Source_Acc_Type }}</td>
-                                    <td>{{ i.Target_Acc_Type }}</td>
+                                    <td>{{ i.Source_Acct_type }}</td>
+                                    <td>{{ i.Target_Acct_type }}</td>
 
                                     </tr>
                                     {% endfor %}
