@@ -5,7 +5,6 @@ import json
 from functools import wraps
 from db import db_service as db
 
-
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 
@@ -110,7 +109,7 @@ def preUpdateCustomer():
 			if db.isCustomerSsnidExist(ssnid):
 				customer_data = db.getCustomerSsnidDetails(ssnid)
 				form=RegistrationForm()
-				return render_template("updateCustomer.html", cd = customer_data, form=form)
+				return render_template("updateCustomer.html", cd = customer_data[0], form=form)
 			else:
 				flash("customer does not exist")
 				return redirect(url_for('preUpdateCustomer'))
@@ -120,7 +119,7 @@ def preUpdateCustomer():
 			if db.isCustomerIdExist(cid):
 				customer_data = db.getCustomerIdDetails(cid)
 				form=RegistrationForm()
-				return render_template('updateCustomer.html', cd = customer_data, form=form)
+				return render_template('updateCustomer.html', cd = customer_data[0], form=form)
 			else:
 
 				flash("customer does not exist")
@@ -169,7 +168,7 @@ def preDeleteCustomer():
 			if db.isCustomerSsnidExist(ssnid):
 				customer_data = db.getCustomerSsnidDetails(ssnid)
 				
-				return render_template('deleteCustomer.html', cd=customer_data)
+				return render_template('deleteCustomer.html', cd=customer_data[0])
 			else:
 				return redirect(url_for('preDeleteCustomer'))
 						
@@ -208,7 +207,7 @@ def deleteCustomer():
 @app.route('/customer_status', methods=['GET'])
 @login_required
 def customerStatus():
-	customer_data = db.getCustomerDetails()
+	customer_data = db.getCustomerStatus()
 	if customer_data[0] :
 		return render_template('customerstatus.html', customerData=customer_data[1])
 	else:
@@ -277,7 +276,7 @@ def deleteAccount():
 		if 'aid' in request.form:
 			aid = request.form['aid']
 
-			response = db.deleteCustomer(aid)
+			response = db.deleteAccount(aid)
 
 			if response[0]:
 				flash("Customer deleted successfully")
