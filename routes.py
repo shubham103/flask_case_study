@@ -289,12 +289,6 @@ def deleteAccount():
 				return redirect(url_for("preDeleteAccount"))
 
 
-@app.route('/account_status', methods=['GET'])
-@login_required
-def accountStatus():
-	return render_template('index.html')
-
-
 # searchAccount.html
 # accountlist.html
 # accountdetails.html ---- its ha three options withdraw, deposit and transfer
@@ -481,3 +475,13 @@ def statementByDate():
 		else:
 			flash("please check account number",'danger')
 			return redirect(url_for('statement'))
+
+@app.route('/account_status', methods=['GET'])
+@login_required
+def accountStatus():
+	account_data = db.getAccountStatus()
+	if account_data[0] :
+		return render_template('accountstatus.html', accountData=account_data[1])
+	else:
+		flash(account_data[1],'danger')
+	return redirect(url_for('index'))

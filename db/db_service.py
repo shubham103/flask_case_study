@@ -400,3 +400,20 @@ def getCustomerStatus():
         l.append(False)
         l.append(error_msg)
         return l
+
+def getAccountStatus():
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * FROM accountstatus")
+    res2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    l = []
+    if res1 >= 1:
+        l.append(True)
+        l.append(res2)
+        return l
+    else:
+        error_msg = "No Customer exist"
+        l.append(False)
+        l.append(error_msg)
+        return l
