@@ -4,6 +4,7 @@ import os
 import json
 from functools import wraps
 from db import db_service as db
+from datetime import datetime
 
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
@@ -460,9 +461,12 @@ def statementByDate():
 		aid    = request.form['aid']
 		sdate  = request.form['start_date']
 		edate  = request.form['end_date']
-
-		print(type(sdate))
-		print(type(edate))	
+		
+		date1 = datetime.strptime(sdate, '%Y-%m-%d')
+		date2 = datetime.strptime(edate, '%Y-%m-%d')
+		if date1 > date2 or date1 == date2:
+			flash("starting date should be before end date",'danger')
+			return render_template('statement.html')
 
 
 		if db.isAccountIdExist(aid):
@@ -472,7 +476,7 @@ def statementByDate():
 			if response[0]:
 				return render_template("showStatements.html",response=response)
 			else:
-				flash(response[1],'success')   
+				flash(response[1],'danger')   
 				return render_template('statement.html')
 		else:
 			flash("please check account number",'danger')
