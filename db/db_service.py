@@ -1,3 +1,6 @@
+from main import mysql
+from datetime import datetime
+
 def isUserExist(userId,password):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT username,password from userstore where username=%s and password=%s", (userId, password))
@@ -61,11 +64,11 @@ def createAccount(cid, aType, deposit):
     dur=3
     cur = mysql.connection.cursor()
     l = []
-    res1 = cur.execute("SELECT * from account where Customer_ID=%s", cid)
-    if res1 >= 1:
+    res1 = cur.execute("SELECT * from customer where Customer_ID=%s", cid)
+    if res1 == 0:
         mysql.connection.commit()
         cur.close()
-        error_msg = "Customer already exist with %s ID" % cid
+        error_msg = "Customer doesnot exist with %s ID" % cid
         l.append(False)
         l.append(error_msg)
         return l
@@ -78,7 +81,7 @@ def createAccount(cid, aType, deposit):
         cur.close()
         return l
 
-def getCustomerSSnidDetils(ssnid):
+def getCustomerSSnidDetails(ssnid):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * from customer where SSN_ID=%s", ssnid)
     if res1 >= 1:
@@ -141,7 +144,7 @@ def getCustomerDetails():
         l.append(error_msg)
         return l
 
-def getAccountIdDetils(aid):
+def getAccountIdDetails(aid):
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * from account where Account_ID=%s", aid)
     if res1 >= 1:
@@ -229,8 +232,8 @@ def withdraw(aid,wamt):
             if k == 'Balance':
                 bal = v
                 break
-        if bal>=wamt:
-            cur.execute("Update account SET Balance=Balance-%s where Account_ID=%s", (wamt, aid))
+        if bal>=int(wamt):
+            cur.execute("Update account SET Balance=Balance-%s where Account_ID=%s", (int(wamt), aid))
             mysql.connection.commit()
             cur.close()
             l.append(True)
@@ -252,18 +255,15 @@ def withdraw(aid,wamt):
         return l
 
 def transfer(amount, SrcAid, TgtAid):
+    amount=int(amount)
     cur = mysql.connection.cursor()
     res1 = cur.execute("SELECT * FROM account where Account_ID=%s", SrcAid)
     l = []
     if res1 >= 1:
         val = cur.fetchall()  # val is a tuple
         for k, v in val[0].items():
-            if k == 'Customer_ID':
-                cid1 = v
             if k == 'Account_Type':
                 at1 = v
-            if k == 'Account_ID':
-                aid = v
             if k == 'Balance':
                 bal = v
     else:
@@ -298,8 +298,8 @@ def transfer(amount, SrcAid, TgtAid):
 
             # Insert Data into Transaction Table
             cur.execute(
-                """INSERT INTO transaction(Customer_ID, Account_ID, Amount, Transaction_date, Source_Acct_type, Target_Acct_type) VALUES(%s,%s,%s,%s,%s,%s)""",
-                (cid1, aid, amount, datetime.today().strftime('%Y-%m-%d'), at1, at2))
+                """INSERT INTO transaction(Source_Account_ID, Tgt_Account_ID, Amount, Transaction_date, Source_Acct_type, Target_Acct_type) VALUES(%s,%s,%s,%s,%s,%s)""",
+                (SrcAid, TgtAid, amount, datetime.today().strftime('%Y-%m-%d'), at1, at2))
             mysql.connection.commit()
             cur.close()
             l.append(True)
@@ -314,8 +314,9 @@ def transfer(amount, SrcAid, TgtAid):
             return l
 
 def statementByNumber(aid,n):
+    n=int(n)
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * from transaction where Account_ID=%s", aid)
+    res1 = cur.execute("SELECT * from transaction where Source_Account_ID=%s", aid)
     if res1 >= 1:
         val = cur.fetchmany(size=n)
         mysql.connection.commit()
@@ -327,7 +328,7 @@ def statementByNumber(aid,n):
 #Mini Statement
 def statementByDate(aid,sdate,edate):
     cur = mysql.connection.cursor()
-    res1 = cur.execute("SELECT * from transaction where Account_ID=%s and Transaction_date between %s and %s",
+    res1 = cur.execute("SELECT * from transaction where Source_Account_ID=%s and Transaction_date between %s and %s",
                        (aid, sdate, edate))
     if res1 >= 1:
         val = cur.fetchall()
@@ -382,3 +383,20 @@ def isAccountIdExist(TgtAid):
         return True
     else:
         return False
+
+def getCustomerStatus():
+    cur = mysql.connection.cursor()
+    res1 = cur.execute("SELECT * FROM customerstatus")
+    res2 = cur.fetchall()
+    mysql.connection.commit()
+    cur.close()
+    l = []
+    if res1 >= 1:
+        l.append(True)
+        l.append(res2)
+        return l
+    else:
+        error_msg = "No Customer exist"
+        l.append(False)
+        l.append(error_msg)
+        return l
