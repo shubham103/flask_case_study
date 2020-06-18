@@ -20,7 +20,7 @@ def login_required(f):
 		if 'userId' in session:
 			return f(*args,**kwargs)
 		else:
-			flash(" You need to login first.. ")
+			flash(" You need to login first.. ",'danger')
 			return redirect(url_for("login"))
 	return wrap
 
@@ -41,12 +41,12 @@ def login():
 
 			session['userId'] = userId
 
-			flash('success fully logged in.')
+			flash('success fully logged in.','success')
 			return redirect(url_for('index'))
 
 		else:
 
-			flash('please enter correct Id or Password.. please try again !!')
+			flash('please enter correct Id or Password.. and try again !!','danger')
 			return redirect(url_for('login'))
 
 	else:
@@ -79,16 +79,16 @@ def createCustomer():
 		state		= request.form['state']
 		
 		if db.isCustomerSsnidExist(ssnid):
-			flash("customer already exist")
+			flash("customer already exist",'danger')
 			return redirect(url_for("createCustomer"))
 
 		response=db.createCustomer(ssnid,name,age, address, city, state)
 
 		if response[0]:
-			flash("Customer creation initiated successfully")
+			flash("Customer creation initiated successfully",'success')
 			return redirect(url_for("index"))
 		else:
-			flash(response[1])
+			flash(response[1],'danger')
 			return redirect(url_for("createCustomer"))
 
 		
@@ -111,7 +111,7 @@ def preUpdateCustomer():
 				form=RegistrationForm()
 				return render_template("updateCustomer.html", cd = customer_data[0], form=form)
 			else:
-				flash("customer does not exist")
+				flash("customer does not exist",'danger')
 				return redirect(url_for('preUpdateCustomer'))
 
 		elif 'cid' in request.form:
@@ -122,7 +122,7 @@ def preUpdateCustomer():
 				return render_template('updateCustomer.html', cd = customer_data[0], form=form)
 			else:
 
-				flash("customer does not exist")
+				flash("customer does not exist",'danger')
 				return redirect(url_for('preUpdateCustomer'))
 						
 
@@ -148,10 +148,10 @@ def updateCustomer():
 		response =  db.updateCustomer(ssnid,name,address,age)
 
 		if response[0]:
-			flash("Customer updated successfully")
+			flash("Customer updated successfully",'success')
 			return redirect(url_for("index"))
 		else:
-			flash(response[1])
+			flash(response[1],'danger')
 			return redirect(url_for("preUpdateCustomer"))
 	else:
 
@@ -193,10 +193,10 @@ def deleteCustomer():
 			response = db.deleteCustomer(ssnid)
 
 			if response[0]:
-				flash("Customer deleted successfully")
+				flash("Customer deleted successfully",'success')
 				return redirect(url_for("index"))
 			else:
-				flash(response[1])
+				flash(response[1],'danger')
 				return redirect(url_for("preDeleteCustomer"))
 
 		
@@ -211,7 +211,7 @@ def customerStatus():
 	if customer_data[0] :
 		return render_template('customerstatus.html', customerData=customer_data[1])
 	else:
-		flash(customer_data[1])
+		flash(customer_data[1],'danger')
 	return redirect(url_for('index'))
 
 
@@ -231,10 +231,10 @@ def createAccount():
 		response=db.createAccount(cid, aType, deposit)
 
 		if response[0]:
-			flash("Account creation initiated successfully")
+			flash("Account creation initiated successfully",'success')
 			return redirect(url_for("index"))
 		else:
-			flash(response[1])
+			flash(response[1],'danger')
 			return redirect(url_for("createAccount"))
 		
 	else: 
@@ -257,7 +257,7 @@ def preDeleteAccount():
 
 				return render_template('deleteAccount.html', account_data=account_data)
 			else:
-				flash("acount does not exist !!!!!!!!")
+				flash("acount does not exist !!!!!!!!",'success')
 				return redirect(url_for('preDeleteAccount'))
 						
 
@@ -279,10 +279,10 @@ def deleteAccount():
 			response = db.deleteAccount(aid)
 
 			if response[0]:
-				flash("Customer deleted successfully")
+				flash("Customer deleted successfully",'success')
 				return redirect(url_for("index"))
 			else:
-				flash(response[1])
+				flash(response[1],'danger')
 				return redirect(url_for("preDeleteAccount"))
 
 
@@ -310,7 +310,7 @@ def searchAccount():
 				return render_template('accountdetails.html', accountData=account_data)
 
 			else:
-				flash("account does not exist")
+				flash("account does not exist",'danger')
 				return redirect(url_for('searchAccount'))
 
 		elif 'ssnid' in request.form:
@@ -320,7 +320,7 @@ def searchAccount():
 				accounts = db.getSsnidAccounts(ssnid)
 				return render_template('accountlist.html',accountNumbers=accounts)
 			else:
-				flash("customer  does not exist")
+				flash("customer  does not exist",'danger')
 				return redirect(url_for('searchAccount'))		
 
 	else:
@@ -342,10 +342,10 @@ def deposit():
 		response = db.deposit(aid,damt)
 
 		if response[0]:
-			flash("Amount deposited successfully")
+			flash("Amount deposited successfully",'success')
 			return redirect(url_for("index"))
 		else:
-			flash(response[1])
+			flash(response[1],'danger')
 			return redirect(url_for("searchAccount"))
 
 
@@ -370,10 +370,10 @@ def withdraw():
 		response = db.withdraw(aid,wamt)
 
 		if response[0]:
-			flash("Amount withdrawn successfully")
+			flash("Amount withdrawn successfully",'success')
 			return redirect(url_for("index"))
 		else:
-			flash(response[1])
+			flash(response[1],'danger')
 			return redirect(url_for("searchAccount"))
 		
 		
@@ -399,10 +399,10 @@ def transfer():
 			response = db.transfer(amount, SrcAid, TgtAid)
 
 			if response[0]:
-				flash("Amount transfer completed successfully")
+				flash("Amount transfer completed successfully",'success')
 				return redirect(url_for("index"))
 			else:
-				flash(response[1])
+				flash(response[1],'danger')
 				return render_template('transfer.html')
 		else:
 			flah("please check the account number.. something is wrong!!!!!")
@@ -442,10 +442,10 @@ def statementByNumber():
 			if response[0]:
 				return render_template("showStatements.html",response=response)
 			else:
-				flash(response[1])
+				flash(response[1],'success')
 				return render_template('statement.html')
 		else:
-			flash("please check account number")
+			flash("please check account number",'danger')
 			return redirect(url_for('statement'))
 
 
@@ -470,8 +470,8 @@ def statementByDate():
 			if response[0]:
 				return render_template("showStatements.html",response=response)
 			else:
-				flash(response[1])   
+				flash(response[1],'success')   
 				return render_template('statement.html')
 		else:
-			flash("please check account number")
+			flash("please check account number",'danger')
 			return redirect(url_for('statement'))
