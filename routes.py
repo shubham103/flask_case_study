@@ -466,7 +466,7 @@ def statementByDate():
 		date2 = datetime.strptime(edate, '%Y-%m-%d')
 		if date1 > date2 or date1 == date2:
 			flash("starting date should be before end date",'danger')
-			return render_template('statement.html')
+			return redirect(url_for('statement'))
 
 
 		if db.isAccountIdExist(aid):
